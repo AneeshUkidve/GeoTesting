@@ -1,0 +1,23 @@
+theorem cycl5points : ∀ a b c d e : P, (cycl a b c d) ∧ (cycl a b c e) ∧ (a ≠ b) ∧ (a ≠ c) ∧ (b ≠ c) → cycl a b d e := by
+  simp [cycl]
+  intro a b c d e h1 hc1 h2 hc2 hab hac hbc
+  -- cases h1; rename_i o h'; cases h'; rename_i r hd1
+  -- simp at hd1
+  -- cases h2; rename_i o' h'; cases h'; rename_i r' hd2
+  -- simp at hd2
+  have hsp : EuclideanGeometry.Cospherical {a, b, c} := by
+    have hs : ({a, b, c} : Set P) ⊆ {a, b, c, d} := by simp [subset_def]
+    exact EuclideanGeometry.Cospherical.subset hs h1
+
+  let hind := EuclideanGeometry.Cospherical.affineIndependent_of_ne hsp hab hac hbc
+
+  let ABC : Affine.Simplex ℝ P 2 := ⟨![a, b, c], hind⟩
+
+  --let O := Affine.Simplex.circumcenter ABC
+  let s := ({a, b, c} : Set P)
+  have hcop : d ∈ affineSpan ℝ s := by
+    if hcop' : (d ∈ affineSpan ℝ s) then
+      exact hcop'
+    else
+      sorry
+  sorry
